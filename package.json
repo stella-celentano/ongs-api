@@ -1,0 +1,19 @@
+{
+  "name": "ongs-api",
+  "version": "1.0.0",
+  "description": "Back-end Node.js para o projeto ONG's Control da matéria de Lab. Eng. Soft III ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stella-celentano/ongs-api.git"
+  },
+  "author": "stella-celentano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stella-celentano/ongs-api/issues"
+  },
+  "homepage": "https://github.com/stella-celentano/ongs-api#readme"
+}
