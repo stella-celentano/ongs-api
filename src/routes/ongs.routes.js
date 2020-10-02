@@ -1,6 +1,6 @@
 const express = require('express');
 
-const OngsController = require('./../controllers/AnimalsController');
+const OngsController = require('./../controllers/OngsController');
 
 const routes = express.Router();
 
