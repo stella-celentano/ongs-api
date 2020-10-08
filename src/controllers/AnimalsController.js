@@ -8,8 +8,8 @@ module.exports = {
     },
 
     async create(request, response) {
-        const ong_id = 1;
-        
+        const ong_id = request.headers;
+
         console.log('entrou index');
 
         const { nome, porte, comportamento } = request.body;
@@ -19,7 +19,7 @@ module.exports = {
             nome,
             porte,
             comportamento,
-            ong_id
+            ong_id : ong_id.ongid
 
         });
 

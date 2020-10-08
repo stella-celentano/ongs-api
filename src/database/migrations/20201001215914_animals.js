@@ -6,7 +6,7 @@ exports.up = function(knex) {
         table.string('porte').notNullable();
         table.string('comportamento').notNullable();
         table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.integer('ong_id').unsigned().notNullable();
+        table.string('ong_id').unsigned().notNullable();
         
         table.foreign('ong_id').references('id').inTable('Ong');
     });

@@ -4,10 +4,10 @@ exports.up = function(knex) {
         table.increments('id');
         table.string('cep').notNullable();
         table.string('rua').notNullable();
-        table.integer('numero').notNullable();
+        table.integer('numeroEndereco').notNullable();
         table.string('estado').notNullable();
         table.string('cidade').notNullable();
-        table.integer('ong_id').unsigned().notNullable();
+        table.string('ong_id').unsigned().notNullable();
         
         table.foreign('ong_id').references('id').inTable('Ong');
     });
