@@ -95,6 +95,6 @@ module.exports = {
                 error: "Unexpected error while delete an animal"
             })
         }
-        
+
     }
 };
