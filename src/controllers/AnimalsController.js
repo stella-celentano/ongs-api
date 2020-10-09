@@ -16,24 +16,18 @@ module.exports = {
 
         console.log(request.body);
 
-        const trx = await connection.transaction();
-
         try {
-            await trx('Animal').insert({
+            await connection('Animal').insert({
                 nome,
                 porte,
                 comportamento,
                 ong_id: ong_id.ongid
             });
 
-            await trx.commit();
-
             return response.status(204).send({ message: 'Animal has been created' });
 
-        } catch (ex) {
-            trx.rollback();
-
-            console.log(ex);
+        } catch (err) {
+            console.log(err);
             return response.status(400).json({
                 error: "Unexpected error while creating new animal"
             })
@@ -44,19 +38,35 @@ module.exports = {
         const { id } = request.params;
         const { nome, porte, comportamento } = request.body;
 
-        await connection('Animal').where('id', '=', id).update({
-            nome: nome,
-            porte: porte,
-            comportamento: comportamento
-        });
+        try {
+            await connection('Animal').where('id', '=', id).update({
+                nome: nome,
+                porte: porte,
+                comportamento: comportamento
+            });
 
-        return response.status(204).send('Updated');
+            return response.status(204).send({ message: 'Animal has been updated' });
+
+        } catch (err) {
+            console.log(err);
+            return response.status(400).json({
+                error: "Unexpected error while update an animal"
+            })
+        }
     },
 
     async delete(request, response) {
         const { id } = request.params;
 
-        await connection('Animal').where('id', '=', id).delete();
-        return response.status(204).send('Deleted');
+        try {
+            await connection('Animal').where('id', '=', id).delete();
+            return response.status(204).send('Deleted');
+        } catch (err) {
+            console.log(err);
+            return response.status(400).json({
+                error: "Unexpected error while delete an animal"
+            })
+        }
+        
     }
 };
