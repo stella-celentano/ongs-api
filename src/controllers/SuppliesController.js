@@ -8,41 +8,80 @@ module.exports = {
     },
 
     async create(request, response) {
-        const ong_id = 1;
+        const ong_id = request.headers;
         
-        console.log('entrou index');
+        
 
         const { nomeItem, quantidade, valorTotal } = request.body;
         
-        console.log(request.body);
-        await connection('Mantimento').insert({
-            nomeItem,
-            quantidade,
-            valorTotal,
-            ong_id
 
-        });
 
-        return response.json({ong_id}); 
+        try {
+            await connection('Mantimento').insert({
+                nomeItem,
+                quantidade,
+                valorTotal,
+                ong_id: ong_id.ongid
+            });
+
+           
+
+            return response.status(204).send({ message: 'Supplie has been created' });
+
+        } catch (ex) {
+            
+
+            console.log(ex);
+            return response.status(400).json({
+                error: "Unexpected error while creating new supplie"
+            })
+        }
     },
 
     async update(request, response){
         const { id } = request.params;
         const { nomeItem, quantidade, valorTotal } = request.body;
 
-        await connection('Mantimento').where('id', '=' , id).update({
-            nomeItem,
-            quantidade,
-            valorTotal
-        });
 
-        return response.status(204).send('Updated');
+        try {
+            await connection('Mantimento').where('id', '=' , id).update({
+                nomeItem,
+                quantidade,
+                valorTotal,
+                ong_id: ong_id.ongid
+            });
+
+            
+
+            return response.status(204).send({ message: 'Supplie has been updated' });
+
+        } catch (ex) {
+            
+
+            console.log(ex);
+            return response.status(400).json({
+                error: "Unexpected error while update new supplie"
+            })
+        }
     },
 
     async delete(request, response) {
         const { id } = request.params;
 
-        await connection('Mantimento').where('id', '=' , id).delete();
-        return response.status(204).send('Deleted');
+        
+        
+        try {
+            await connection('Mantimento').where('id', '=' , id).delete();
+            
+            return response.status(204).send({ message: 'Supplie has been deleted' });
+
+        } catch (ex) {
+            
+
+            console.log(ex);
+            return response.status(400).json({
+                error: "Unexpected error while creating new supplie"
+            })
+        }
     }
 };
