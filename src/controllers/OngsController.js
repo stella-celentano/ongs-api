@@ -69,23 +69,68 @@ module.exports = {
 
     async update(request, response) {
         const { id } = request.params;
-        const { nome, descricao, email, nome_responsavel, senha } = request.body;
+        const { nome, descricao, email, nome_responsavel, senha, ddd, numeroTelefone, cep, rua, numeroEndereco, estado, cidade } = request.body;
 
-        await connection('Ong').where('id', '=', id).update({
-            nome: nome,
-            descricao: descricao,
-            email: email,
-            nome_responsavel: nome_responsavel,
-            senha: senha
-        });
+        const trx = await connection.transaction();
 
-        return response.status(204).send('Updated');
+        try {
+            await trx('Ong').where('id', '=', id).update({
+                nome: nome,
+                descricao: descricao,
+                email: email,
+                nome_responsavel: nome_responsavel,
+                senha: senha
+            });
+
+            await trx('Telefone').insert({
+                ddd: ddd,
+                numeroTelefone: numeroTelefone,
+                ong_id: id
+            });
+
+            await trx('Endereco').insert({
+                cep: cep,
+                rua: rua,
+                numeroEndereco: numeroEndereco,
+                estado: estado,
+                cidade: cidade,
+                ong_id: id
+            })
+
+            return response.status(204).send('Updated');
+        } catch (ex) {
+            trx.rollback();
+
+            console.log(ex);
+            return response.status(400).json({
+                error: "Unexpected error while updating new ong"
+            })
+        }
+
     },
 
     async delete(request, response) {
         const { id } = request.params;
 
-        await connection('Ong').where('id', '=', id).delete();
-        return response.status(204).send('Deleted');
+        const trx = await connection.transaction();
+
+        try {
+            await trx('Ong').where('id', '=', id).delete();
+
+            await trx('Telefone').where('id', '=', id).delete();
+
+            await trx('Endereco').where('id', '=', id).delete();
+
+            return response.status(204).send('Deleted');
+        } catch (ex) {
+            trx.rollback();
+
+            console.log(ex);
+            return response.status(400).json({
+                error: "Unexpected error while delete an ong"
+            })
+        }
+
+
     }
 };
