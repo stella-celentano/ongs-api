@@ -7,7 +7,7 @@ exports.up = function(knex) {
         table.integer('numeroEndereco').notNullable();
         table.string('estado').notNullable();
         table.string('cidade').notNullable();
-        table.string('ong_id').unsigned().notNullable();
+        table.string('ong_id').notNullable();
         
         table.foreign('ong_id').references('id').inTable('Ong');
     });

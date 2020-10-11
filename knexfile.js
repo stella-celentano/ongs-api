@@ -3,9 +3,12 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'mysql2',
     connection: {
-      filename: './src/database/db.sqlite'
+      host: '127.0.0.1',
+      user:'root',
+      password: '',
+      database: 'ongcontrolldb',
     },
     migrations:{
       directory: './src/database/migrations'

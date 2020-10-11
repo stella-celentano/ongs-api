@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.increments('id');
         table.string('ddd').notNullable();
         table.string('numeroTelefone').notNullable();
-        table.string('ong_id').unsigned().notNullable();
+        table.string('ong_id').notNullable();
         
         table.foreign('ong_id').references('id').inTable('Ong');
     });
