@@ -4,9 +4,9 @@ const AnimalsController = require('./../controllers/AnimalsController');
 
 const routes = express.Router();
 
-routes.post('/createAnimals', AnimalsController.create);
-routes.get('/getAnimals', AnimalsController.index);
-routes.put('/updateAnimals/:id', AnimalsController.update);
-routes.delete('/deleteAnimals/:id', AnimalsController.delete);
+routes.post('', AnimalsController.create);
+routes.get('', AnimalsController.index);
+routes.put('/:id', AnimalsController.update);
+routes.delete('/:id', AnimalsController.delete);
 
 module.exports = routes;
