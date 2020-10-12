@@ -40,6 +40,7 @@ module.exports = {
 
     async update(request, response){
         const { id } = request.params;
+        const ong_id = request.headers;
         const { nomeItem, quantidade, valorTotal } = request.body;
 
 

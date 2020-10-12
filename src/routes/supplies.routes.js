@@ -4,9 +4,9 @@ const SuppliesController = require('./../controllers/SuppliesController');
 
 const routes = express.Router();
 
-routes.post('/createSupplies', SuppliesController.create);
-routes.get('/getSupplies', SuppliesController.index);
-routes.put('/updateSupplies/:id', SuppliesController.update);
-routes.delete('/deleteSupplies/:id', SuppliesController.delete);
+routes.post('', SuppliesController.create);
+routes.get('', SuppliesController.index);
+routes.put('/:id', SuppliesController.update);
+routes.delete('/:id', SuppliesController.delete);
 
 module.exports = routes;
