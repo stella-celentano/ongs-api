@@ -2,13 +2,23 @@
 
 module.exports = {
 
+  // development: {
+  //   client: 'mysql2',
+  //   connection: {
+  //     host: '127.0.0.1',
+  //     user:'root',
+  //     password: '',
+  //     database: 'ongcontrolldb',
+  //   },
+  //   migrations:{
+  //     directory: './src/database/migrations'
+  //   },
+  //   useNullAsDefault:true,
+  // },
   development: {
-    client: 'mysql2',
+    client: 'sqlite3',
     connection: {
-      host: '127.0.0.1',
-      user:'root',
-      password: '',
-      database: 'ongcontrolldb',
+      filename: './src/database/db.sqlite'
     },
     migrations:{
       directory: './src/database/migrations'

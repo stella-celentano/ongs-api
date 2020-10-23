@@ -20,9 +20,16 @@ module.exports = {
 
     async create(request, response) {
         const { nome, descricao, email, nome_responsavel, senha, ddd, numeroTelefone, cep, rua, numeroEndereco, estado, cidade } = request.body;
-        console.log(request.body);
+        
+        const requestImages = request.files;
 
-        var id = createUID();
+        console.log(requestImages);
+
+        const images = requestImages.map(image => {
+            return {path: image.filename}
+        });
+
+        const id = createUID();
 
         const trx = await connection.transaction();
 
@@ -49,7 +56,16 @@ module.exports = {
                 estado,
                 cidade,
                 ong_id: id
-            })
+            });
+
+            await trx('Images').insert(
+                images.map(image =>{
+                    return{
+                        path : image.path,
+                        ong_id: id
+                    }
+                })
+            );
 
             await trx.commit();
 
