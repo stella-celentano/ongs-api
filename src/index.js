@@ -18,7 +18,7 @@ app.get('/', (req, res) => res.send({ message: `API listening in port ${PORT}` }
 
 app.use('/ongs', OngsRoutes);
 app.use('/animals', AnimalsRoutes);
-app.use('/supplies', SuppliesRoutes)/
+app.use('/supplies', SuppliesRoutes)
 
 app.use('*', (req, res) => res.send({ message: 'API not found' }))
 
