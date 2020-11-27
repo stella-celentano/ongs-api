@@ -69,16 +69,11 @@ module.exports = {
     async delete(request, response) {
         const { id } = request.params;
 
-        
-        
         try {
             await connection('Mantimento').where('id', '=' , id).delete();
-            
             return response.status(204).send({ message: 'Supplie has been deleted' });
-
+       
         } catch (ex) {
-            
-
             console.log(ex);
             return response.status(400).json({
                 error: "Unexpected error while creating new supplie"
