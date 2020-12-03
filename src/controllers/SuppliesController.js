@@ -7,14 +7,17 @@ module.exports = {
         return response.json(supplies);
     },
 
+    async show(request, response) {
+        const { id } = request.params;
+
+        const supplie = await connection('Mantimento').select('*').where('id', '=', id);
+        return response.json(supplie);
+    },
+
     async create(request, response) {
         const ong_id = request.headers;
-        
-        
 
         const { nomeItem, quantidade, valorTotal } = request.body;
-        
-
 
         try {
             await connection('Mantimento').insert({
@@ -24,13 +27,9 @@ module.exports = {
                 ong_id: ong_id.ongid
             });
 
-           
-
             return response.status(204).send({ message: 'Supplie has been created' });
 
         } catch (ex) {
-            
-
             console.log(ex);
             return response.status(400).json({
                 error: "Unexpected error while creating new supplie"
@@ -38,27 +37,23 @@ module.exports = {
         }
     },
 
-    async update(request, response){
+    async update(request, response) {
         const { id } = request.params;
         const ong_id = request.headers;
         const { nomeItem, quantidade, valorTotal } = request.body;
 
 
         try {
-            await connection('Mantimento').where('id', '=' , id).update({
+            await connection('Mantimento').where('id', '=', id).update({
                 nomeItem,
                 quantidade,
                 valorTotal,
                 ong_id: ong_id.ongid
             });
 
-            
-
             return response.status(204).send({ message: 'Supplie has been updated' });
 
         } catch (ex) {
-            
-
             console.log(ex);
             return response.status(400).json({
                 error: "Unexpected error while update new supplie"
@@ -70,9 +65,9 @@ module.exports = {
         const { id } = request.params;
 
         try {
-            await connection('Mantimento').where('id', '=' , id).delete();
+            await connection('Mantimento').where('id', '=', id).delete();
             return response.status(204).send({ message: 'Supplie has been deleted' });
-       
+
         } catch (ex) {
             console.log(ex);
             return response.status(400).json({
