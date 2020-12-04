@@ -12,9 +12,56 @@ function createUID() {
 
 module.exports = {
     async index(request, response) {
-        const ongs = await connection('Ong').select('*');
+        const { ongId } = request.body
+        try{
+            const ongs = await connection('Ong')
+            .join('Endereco', 'Ong.id', '=', 'Endereco.ong_id')
+            .join('Telefone', 'Ong.id', '=', 'Telefone.ong_id')
+            .select('Ong.id', 'Ong.nome', 'Ong.descricao', 'Ong.email', 'Ong.nome_responsavel', 'Endereco.id as Endereco_Id', 'Endereco.cep', 'Endereco.rua', 'Endereco.numeroEndereco', 'Endereco.estado', 'Endereco.cidade', 'Telefone.id as TelefoneId', 'Telefone.ddd', 'Telefone.numeroTelefone')
+            .where({"Ong.id" : ongId})
+            
+            // .join('Images', 'Ong.id', '=', 'Images.ong_id')
+            
+            
+            // .raw('SELECT * FROM Ong').then(function(resp){
 
-        return response.json(ongs);
+                // return response.json(resp);
+            // })
+            return response.json(ongs);
+        }catch(err){
+            return response.status(404).json({
+                error: "Unexpected error while trying to get ong data"
+            })
+        }
+    },
+
+    async login(request, response){
+        const { emailRequest, passwordRequest } = request.body;
+        try{
+            const ong = await connection('Ong')
+            .where({
+                email: emailRequest,
+                senha: passwordRequest
+            })
+            .select('id')
+            .select('nome')
+            .first();
+
+            if(!ong){
+                return response.status(404).json({error: 'No User found with this login'});
+            }
+
+            console.log(ong);
+
+            // response.header('loggedOng', ong);
+
+            return response.json(ong);
+
+        }catch(err){
+            return response.status(404).json({
+                error: "Unexpected error while trying to loggin"
+            })
+        }
     },
 
 
