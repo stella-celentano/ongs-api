@@ -7,7 +7,8 @@ const OngsController = require('./../controllers/OngsController');
 const routes = express.Router();
 
 routes.post('', multer(multerConfig).array('file'), OngsController.create);
-routes.get('', OngsController.index);
+routes.post('/getOngData', OngsController.index);
+routes.post('/login', OngsController.login);
 routes.put('/:id', OngsController.update);
 routes.delete('/:id', OngsController.delete);
 
